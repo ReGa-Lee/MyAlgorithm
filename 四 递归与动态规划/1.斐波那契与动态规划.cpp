@@ -1,5 +1,5 @@
 /*
-斐波那契与动归
+	斐波那契与动归
 */
 //暴力 2^N
 int 2NFibo(int n) {
@@ -15,7 +15,7 @@ int 2NFibo(int n) {
 int nFibo(int n) {
 	if (n < 1)
 		return 0;
-	if (1 == n || 2 == n)	//第2个之后执行n-2个循环
+	if (1 == n || 2 == n)	//	第2个之后执行n-2个循环
 		return 1;
 	
 	int fib1 = 1, fib2 = 1, fibs = 0;
@@ -26,32 +26,32 @@ int nFibo(int n) {
 	}
 	return fibs;
 }
-//蛙跳问题 n1 + n2 = ns 顺序计算 N
+//	蛙跳问题 n1 + n2 = ns 顺序计算 N
 int nfrog(int n){
 	if(n < 1)
 		return 0;
-	if(1 == n || 2 == n || 3 == n)	//第3个之后执行n-3个循环
-		return n;	//有时会直接在第一阶 所以return n-1
+	if(1 == n || 2 == n || 3 == n)	//	第3个之后执行n-3个循环
+		return n;	//	有时会直接在第一阶 所以return n-1
 	
 	int num1 = 1; 
 	int num2 = 2; 
 	int nums = 0;
 	for(int i = 3; i < n; i++){
-		nums = num1 + num2;	//有时为了防止溢出 (num1 + num2) % 1000000007
+		nums = num1 + num2;	//	有时为了防止溢出 (num1 + num2) % 1000000007
 		num1 = num2;
 		num2 = nums;
 	}
 	return nums;
 }
-//母牛问题 n1 + (n2 temp) + n3 = ns 顺序计算 N
+//	母牛问题 n1 + (n2 temp) + n3 = ns 顺序计算 N
 int ncows(int n){
 	if (n < 1)
 		return 0;
-	if (1 == n || 2 == n || 3 == n || 4 == n)	//第4个之后执行n-4个循环
+	if (1 == n || 2 == n || 3 == n || 4 == n)	//	第4个之后执行n-4个循环
 		return n;
 
 	int num1 = 1;
-	int temp = 2;	//保存值
+	int temp = 2;	//	保存值
 	int num3 = 3;
 	int nums = 0;
 	for(int i = 4; i < n; i++){
@@ -64,9 +64,9 @@ int ncows(int n){
 }
 
 //递推式转矩阵乘法	logN
-//矩阵乘法 精准寻找到fn的乘法过程
-//[fn fn-1] = [fn-1 fn-2] * A
-//fn = fn-1 * A[0][0] + fn-2 * A[1][0] 横乘竖
+//	矩阵乘法 精准寻找到fn的乘法过程
+//	[fn fn-1] = [fn-1 fn-2] * A
+//	fn = fn-1 * A[0][0] + fn-2 * A[1][0] 横乘竖
 int lognFibo(int n){
 	if (n < 1)
 		return 0;
@@ -78,10 +78,10 @@ int lognFibo(int n){
 	int fn[][] = 1 * rst[0][0] + 1 * rst[1][0];
 	return fn;
 }
-//矩阵的N次方
+//	矩阵的N次方
 int[][] matrixPower(int[][] base, int n){
 	int rst[base.length][base[0].length] = {0};
-	//先把rst设为单位矩阵，相当于整数1
+	//	先把rst设为单位矩阵，相当于整数1
 	for(int i = 0; i < rst.length; i++){
 		rst[i][i] = 1;
 	}
@@ -93,7 +93,7 @@ int[][] matrixPower(int[][] base, int n){
 	}
 	return rst;
 }
-//矩阵乘法的实现
+//	矩阵乘法的实现
 int[][] multiMatrix(int[][] a, int[][] b){
 	int rst[a.length][b[0].length] = {0};
 	for(int i = 0; i < b[0].length; i++){
