@@ -8,7 +8,6 @@ int[] lis1(int [] arr){
 	int dp[] = getdp1(arr);
 	return generateLIS(arr, dp);
 }
-//	求最长递增子序列的首尾值	对dp直接sort
 //	求最长递增子序列 O(N)	逆序还原决策路径
 int[] generateLIS(int[] arr, int[] dp){
 	int len = 0;
@@ -39,10 +38,32 @@ int[] getdp1(int[] arr){
 				dp[i] = max(dp[i], dp[j] + 1);	// dp[i]的前j项在dp[j]中 (循环地)取其中一个dp[j]+1 > dp[i] ? dp[j]+1 : dp[i];
 		}
 	}
-	//sort(dp, dp+arr.length-1);	//	排序dp可以方便获得首尾值
+	//sort(dp, dp+arr.length-1);	//	排序dp可以方便获得最大序列长度
 	return dp;
 }
-//	!	二分法优化计算dp的过程 O(NlogN)	有效区
+//	二分法优化计算dp的过程 O(NlogN)	有效区
 int[] getdp2(int[] arr){
-	
+	int dp[arr.length];
+	int ends[arr.length];
+	ends[0] = arr[0];
+	dp[0] = 1;
+	int valid = 0;	//	有效区右边界
+	int left = 0;	
+	int right = 0;
+	int mid = 0;
+	for(int i = 1; i < arr.length; i++){
+		left = 0;
+		right = valid;
+		while(left <= right){
+			mid = (left + right) / 2;
+			if(arr[i] > ends[mid])	//	(循环)arr[i]与ends有效区内      元素比较
+				left = mid + 1;			
+			else
+				right = mid - 1;	
+		}
+		valid = max(valid, left);
+		end[left] = arr[i];
+		dp[i] = left + 1;
+	}
+	return dp;
 }
