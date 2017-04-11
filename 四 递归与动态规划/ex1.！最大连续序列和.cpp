@@ -11,6 +11,6 @@ int FindGreatestSumOfSubArray(vector<int> arr){
 		maxlen = max(maxlen, dp[i]);
 	}
 	if(0 == maxlen)	//	数组全为负的情况
-		return -1;	
+		return -1;
 	return maxlen;
 }
