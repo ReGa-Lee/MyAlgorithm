@@ -17,7 +17,7 @@ public:
 			while ((i < n) && !isspace(text[i]))
 				i++;
 			if (start < i)
-			Emit(text.substr(start,i-start),¡±1¡å);
+				Emit(text.substr(start,i-start),¡±1¡å);
 		}
 	}
 };
