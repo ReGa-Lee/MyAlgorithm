@@ -6,7 +6,7 @@ T top()
 boolean isEmpty()
 int size()
 //动态性
-void resize(int len)
+//void resize(int len)
 */
 
 import java.util.Iterator;
