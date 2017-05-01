@@ -1,4 +1,8 @@
-﻿public class Selection{
+﻿/*
+描述：基础的排序算法
+实现：遍历数组，选择min与a[i]交换
+*/
+public class Selection{
 	public static void sort(Comparable[] a){
 		int N = a.length;
 		for(int i = 0; i < N; i++){	//	将a[i]与a[i+1...N]中最小的数交换
