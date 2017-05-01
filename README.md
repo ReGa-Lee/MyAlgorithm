@@ -9,7 +9,7 @@
 ---
 
 **17/05/01**  
-4 months just. (按顺序走)  
+just4months. (按顺序走)  
 ！每日剩余时间 Unix实践教程 辅之 CSAPP 现代操作系统  
 ！C艹系  
 ！TCP/IP卷一  
