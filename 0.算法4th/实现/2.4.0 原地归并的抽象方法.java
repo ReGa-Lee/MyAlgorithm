@@ -18,4 +18,5 @@ public static void merge(Comparable[] a, int left, int mid, int right){
 		else
 			a[k] = temp[i++];
 	}
+	//	less() exch() isSorted() main()方法见 2.0 排序算法类模板
 }
