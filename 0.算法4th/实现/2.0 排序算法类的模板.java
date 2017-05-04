@@ -1,5 +1,8 @@
 ﻿/*
 API - Example(sort)
+void sort(Comparable[] a)
+void show(Comparable[] a)
+boolean isSorted(Comparable[] a)
 */
 
 public class Example{
@@ -12,7 +15,7 @@ public class Example{
 		a[i] = a[j];
 		a[j] = t;
 	}
-	private static void show(Comparable[] a){
+	public static void show(Comparable[] a){
 		for(int i = 0; i < a.length; i++)
 			stdOut.print(a[i] + " ");
 		stdOut.println();
