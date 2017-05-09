@@ -1,5 +1,5 @@
 ﻿/*
-API - MaxPQ
+API - SequentialSearchST
 Value get(Key)
 void put(Key, Value)
 */
