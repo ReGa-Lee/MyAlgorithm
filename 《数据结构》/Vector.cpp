@@ -157,7 +157,7 @@ int Vector<T>::disordered () const { //返回逆序对总数
             n++;
     return n; //向量有序当且仅当n = 0
 }
-// 唯一化
+// 有序唯一化
 template <typename T>
 int Vector<T>::uniquify () { //低效版
     int old_size = _size;
@@ -176,7 +176,7 @@ int Vector<T>::uniquify () { //高效版
     shrink();
     return j - i;
 }
-// 查找(区间查找接口)
+// 有序查找(区间查找接口)
 template <typename T>
 Rank Vector<T>::search (T const& e, Rank lo, Rank hi) { //确定不大于e的最后一个节点的秩
     return (rand() % 2) ? binSearch(_elem, e, lo, hi) : fibSearch(_elem, e, lo, hi); //按各50%的概率随机使用bin or fib search
