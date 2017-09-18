@@ -159,11 +159,86 @@ int List<T>::uniquify () {
     return old_size - _size;
 }
 // 有序查找
-template <typename T>
-
-
-
-
-
-template <typename T>
+template <typename T> //在有序列表节点p的n个前驱中，查找不大于e的最后者
+ListNodePosi(T) List<T>::search (T const& e, int n, ListNodePosi(T) p) {
+    while (0 < n--) 
+        if (((p->pred)->data) <= e) //直到命中、数值越界或者范围越界
+            break;
+    return p; //返回的是区间左边界的前驱，可能失败也可能成功
+}
+// 统一入口
+template <typename T> //列表区间排序
+void List<T>::sort (ListNodePosi(T) p, int n) {
+    switch (rand() % 3) {
+        case 1:
+            insertionSort(p, n); //插入排序
+            break;
+        case 2:
+            selectionSort(p, n); //选择排序
+            break;
+        default:
+            mergeSort(p, n);
+            break;
+    }
+}
+// 插入排序
+template <typename T> //对起始于位置p的n个元素排序
+void List<T>::insertionSort (ListNodePosi(T) p, int n) {
+    for (int r = 0; r < n; r++) { //逐一为各节点
+        insertA (search (p->data, r, p), p->data); //查找适当的位置插入
+        p = p->succ;
+        remove(p->pred); //转入下一节点并删除上个节点
+    }
+}
+// 选择排序
+template <typename T> 
+void List<T>::selectionSort (ListNodePosi(T) p, int n) {
+    ListNodePosi(T) head = p->pred;
+    ListNodePosi(T) tail = p;
+    for (int i = 0; i < n; i++) 
+        tail = tail->succ; //至此，待排区间为(head, tail)
+    while (1 < n) { //至少还剩2个节点之前，在待排序区间内
+        ListNodePosi(T) max = selectMax (head->succ, n); //找出max
+        insertB (tail, remove(max)); //将其插入tail前
+        tail = tail->pred;
+        n--;
+    }
+}
+template <typename T> 
+ListNodePosi(T) List<T>::selectMax (ListNodePosi(T) p, int n) {
+    ListNodePosi(T) max = p; //暂定
+    for (ListNodePosi(T) cur = p; 1 < n; n--) //从首节点p出发，后续节点逐一与max比较
+        if (!lt ((cur = cur->succ)->data, max->data) //当前元素不小于max，则
+            max = cur; //更新max
+    return max; 
+}
+// 归并排序
+template <typename T> //列表的归并排序算法：对起始于位置p的n个元素排序
+void List<T>::mergeSort (ListNodePosi(T) & p, int n) {
+    if (n < 2)
+        return;
+    int m = n >> 1; //中点为界
+    ListNodePosi(T) q = p;
+    for (int i = 0; i < m; i++)
+        q = q->succ; //均分列表
+    mergeSort (p, m);
+    mergeSort (q, n - m); //前后子列表分别递归
+    merge (p, m, *this, q, n - m); //归并
+} //注意：排序后，p依然指向归并后区间的新起点
+template <typename T> //有序列表的归并：当前列表中自p起的n个元素，与列表L中自q起的m个元素归并
+void List<T>::merge (ListNodePosi(T) & p, int n, List<T>& L, ListNodePosi(T) q, int m) {
+    ListNodePosi(T) pp = p->pred; //借助前驱，可以是header，以便返回
+    while (0 < m) { //在q尚未移出区间之前
+        if ((0 < n) && (p->data <= q->data)) //若p仍在区间内且v(p) <= v(q)，则
+            if (q == (p = p->succ)) { //p归入合并的列表，并替换为其直接后继
+                break;
+                n--;
+            }
+        else { //若p已经超出右界或v(q) < v(p)，则
+            insertB (p, L.remove((q = q->succ)->pred)); //将q转移到p之前
+            m--;
+        }
+    }
+    p = pp->succ; //确定归并后区间的新起点
+}
 
