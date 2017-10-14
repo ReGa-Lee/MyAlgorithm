@@ -11,10 +11,10 @@ int _size; ListNodePosi(T) header; ListNodePosi(T) trailer;
 #include "List.h"
 
 // 默认构造——统一初始化
-template <typename T>
+template <typename T> //列表初始化，在创建列表对象时统一调用
 void List<T>::init () {
     header = new ListNode<T>;
-    trailer = new ListNode<T>;
+    trailer = new ListNode<T>; //创建头尾哨兵节点
     header->succ = trailer;
     header->pred = NULL;
     trailer->pred = header;
@@ -26,16 +26,16 @@ template <typename T> //重载下标操作符，通过秩直接访问列表节�
 T& List<T>::operator[] (Rank r) {
     ListNodePosi(T) p = first(); //首节点出发
     while (0 < r--)
-        p = p->succ; //顺数r个节点
-    return p->date;
+        p = p->succ; //顺数r个节点即是
+    return p->date; //目标节点，返回其中所存元素
 }
 // 查找
-template <typename T> //无序列表节点p(可能是trailer)的n个前驱中查找等于e的最后一个
+template <typename T> //无序列表节点p(可能是trailer)的n个(真)前驱中查找等于e的最后一个
 ListNodePosi(T) List<T>::find (T const& e, int n, ListNodePosi(T) p) {
-    while (0 < n--) //从右往左
+    while (0 < n--) //对于p的最近的n个前驱，从右往左
         if (e == (p->pred)->data)
             return p;
-    return NULL;
+    return NULL; //p越界意味着区间不含e
 }
 // 插入
 template <typename T> 
@@ -58,14 +58,14 @@ ListNodePosi(T) List<T>::insertB (ListNodePosi(T) p, T cosnt& e) {
     _size++;
     return p->insertAsPred(e); //把e插入p节点前
 }
-template <typename T> //前插入
+template <typename T> //将e紧靠当前节点之前插入于当前节点所属列表 设有哨兵头节点的header
 ListNodePosi(T) List<T>::insertAsPred (T const& e) {
     ListNodePosi(T) x = new ListNode (e, pred, this);
     pred->succ = x; //等效this.pred->succ
     pred = x; //等效this.pred
     return x;
 }
-template <typename T> //后插入
+template <typename T> //将e紧随当前节点之后插入于当前节点所属列表 设有哨兵尾节点的trailer
 ListNodePosi(T) List<T>::insertAsSucc (T cosnt& e) {
     ListNodePosi(T) x = new ListNode (e, this, succ);
     succ->pred = x; //等效this.succ->pred
@@ -73,28 +73,28 @@ ListNodePosi(T) List<T>::insertAsSucc (T cosnt& e) {
     return x;
 }
 // 拷贝构造
-template <typename T>
+template <typename T> //列表内部方法：拷贝列表中自位置p起的n项
 void List<T>::copyNodes (ListNodePosi(T) p, int n) {
-    init();
+    init(); //初始化
     while (n--) {
-        insertAsLast (p->data);
+        insertAsLast (p->data); //将起自p的n项依次作为末节点插入
         p = p->succ;
     }
 }
-template <typename T> //给定p n的区间拷贝接口
+template <typename T> //拷贝列表中自位置p起的n项 的区间拷贝接口
 List<T>::List (ListNodePOsi(T) p, int n) {
     copyNodes (p, n);
 }
-template <typename T> //整体拷贝接口
+template <typename T> //整体拷贝列表L 的整体拷贝接口
 List<T>::List (List<T> const& L) {
     copyNodes (L.first(), L._size);
 }
-template <typename T> //给定下标r的区间拷贝接口
+template <typename T> //拷贝L中自第r项起的n项 的区间拷贝接口
 List<T>::List (List<T> const& L, int r, int n) {
     copyNodes (L[r], n);
 }
 // 删除
-template <typename T>
+template <typename T> //删除合法节点p，返回其数值
 T List<T>::remove (ListNodePosi(T) p) {
     T e = p->data;
     p->pred->succ = p->succ;
@@ -118,7 +118,7 @@ int List<T>::clear () {
     return old_size;
 }
 // 唯一化
-template <typename T>
+template <typename T> //剔除无序列表中的重复节点
 int List<T>::deduplicate () {
     if (_size < 2)
         return 0;
@@ -132,12 +132,12 @@ int List<T>::deduplicate () {
     return old_size - _size;
 }
 // 遍历
-template <typename T>
+template <typename T> //函数指针机制
 void List<T>::traverse (void (*visit) (T&)) {
     for (ListNodePosi(T) p = header->succ; p != trailer; p = p->succ)
         visit (p->data);
 }
-template <typename T> template <typename VST>
+template <typename T> template <typename VST> //函数对象机制
 void List<T>::traverse (VST& visit) {
     for (ListNodePosi(T) p = header->succ; p != trailer; p = p->succ)
         visit (p->data);
