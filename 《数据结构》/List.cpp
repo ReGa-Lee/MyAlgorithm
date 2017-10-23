@@ -1,11 +1,12 @@
 /* 先记录具体实现步骤或是注意事项在xmind里，后实现一遍，再比较一遍书上的
 
-//ListNode
+//ListNode (列表节点)
 typedef int Rank;
 #define ListNodePosi(T) ListNode<T>*
 
 T data; ListNodePosi(T) pred; ListNodePosi(T) succ; 
-//List
+//List 
+
 int _size; ListNodePosi(T) header; ListNodePosi(T) trailer;
 */
 #include "List.h"
