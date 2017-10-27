@@ -140,7 +140,7 @@ void Vector<T>::traverse (void (*visit) (T&)) { //借助函数指针机制
 template <typename T> template <typename VST> //元素类型、操作器
 void Vector<T>::traverse (VST& visit) { //借助函数对象机制
     for (int i = 0; i < _size; i++)
-        visit (_elem[i]); //遍历向量
+        visit ( _elem[i] ); //遍历向量
 }
 template <typename T> struct Increase { //函数对象：递增一个T类对象
     virtual void operator() (T& e) { e++; }; //假设T可直接递增或已重载++

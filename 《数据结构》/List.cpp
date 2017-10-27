@@ -141,7 +141,7 @@ void List<T>::traverse (void (*visit) (T&)) {
 template <typename T> template <typename VST> //函数对象机制
 void List<T>::traverse (VST& visit) {
     for (ListNodePosi(T) p = header->succ; p != trailer; p = p->succ)
-        visit (p->data);
+        visit ( p->data );
 }
 // 有序唯一化
 template <typename T>

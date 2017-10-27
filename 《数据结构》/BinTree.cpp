@@ -37,6 +37,27 @@ void updateHeightAbove (BinNodePosi(T) x); //更新节点x及其祖先高度
     (IsLChild(*((x)->parent)) ? (x)->parent->parent->rc : (x)->parent->parent->lc)
 #define FromParentTo(x) /*来自父亲的引用*/ \ 
     (IsRoot(x) ? _root : (IsLChild(x) ? (x)->parent->lc : (x)->parent-rc))
+// BinNode的插入接口 未列出的还有：succ直接后继接口
+template <typename T> 
+BinNodePosi(T) BinNode<T>::insertAsLC (T const& e) {
+    return lc = new BinNode (e, this); //将e作为当前节点的左孩子插入二叉树
+}
+template <typename T> 
+BinNodePosi(T) BinNode<T>::insertAsRC (T const& e) {
+    return rc = new BinNode (e, this); 
+}
+// BinNode的中序遍历接口 其他类似
+template <typename T> template <typename VST>
+void BinNode<T>::travIn (VST& visit) {
+    switch (rand() % 5) {
+        case 1: travIn_I1(this, visit); break;
+        case 2: travIn_I2(this, visit); break;
+        case 3: travIn_I3(this, visit); break;
+        case 4: travIn_I4(this, visit); break;
+        default: travIn_R(this, visit); break;
+    }
+}
+
 
 // 高度更新
 template <typename T>
@@ -58,7 +79,7 @@ BinNodePosi(T) BinTree<T>::insertAsLC (BinNodePosi(T) x, T const& e) {
 }
 template <typename T>
 BinNodePosi(T) BinTree<T>::insertAsRC (BinNodePosi(T) x, T const& e) {
-    _size++; x->insertAsRC(e); updateHeightAbove(x); return x->rc; //插入到x的右孩子
+    _size++; x->insertAsRC(e); updateHeightAbove(x); return x->rc; 
 }
 // 子树接入
 template <typename T>
@@ -94,5 +115,58 @@ BinTree<T>* BinTree<T>::secede (BinNodePosi(T) x) {
     BinTree<T>* S = new BinTree<T>; S->_root = x; x->parent = NULL; //新树以x为根
     S->_size = x->_size(); _size -= S->_size; return S;
 }
+// 先、后、中序遍历 递归
+template <typename T, typename VST> //元素类型、操作器
+void travPre_R (BinNodePosi(T) x, VST& visit) {
+    if (!x) return;
+    visit ( x->data ); //visit为函数对象，访问当前节点
+    travPre_R(x->lc, visit);
+    travPre_R(x->rc, visit);
+}
+template <typename T, typename VST> 
+void travPost_R (BinNodePosi(T) x, VST& visit) {
+    if (!x) return; 
+    travPost_R(x->lc, visit);
+    travPost_R(x->rc, visit);
+    visit ( x->data );
+}
+template <typename T, typename VST> 
+void travIn_R (BinNodePosi(T) x, VST& visit) {
+    if (!x) return;
+    travIn_R(x->lc, visit);
+    visit ( x->data ); 
+    travIn_R(x->rc, visit);
+}
+// 先序遍历 迭代
+template <typename T, typename VST> //从当前节点出发，沿左子深入，直到无左子；沿途节点遇到后立刻访问
+static void visitAlongLeftBrach (BinNodePosi(T) x, VST& visit, Stack<BinNodePosi(T)>& S) {
+    while (x) {
+        visit ( x->data );
+        S.push(x->rc);
+        x = x->lc;
+    }
+}
+template <typename T, typename VST> 
+void travPre_I2 (BinNodePosi(T) x, VST& visit) {
+    Stack<BinNodePosi(T)> S;
+    while (true) {
+        visitAlongLeftBrach(x, visit, S);
+        if (S.empty()) break; //直到栈空
+        x = S.pop(); //弹出下一批起点
+    }
+}
+// 后序遍历 迭代
 
-// 遍历
+// 中序遍历 迭代
+
+// 层次遍历
+template <typename T, typename VST> 
+void BinNode<T>::travLevel (VST& visit) {
+    Queue<BinNodePosi(T)> Q;
+    Q.enqueue(this); //根节点入队
+    while (!Q.empty()) {
+        BinNodePosi(T) x = Q.dequeue(); visit (x->data);
+        if (HasLChild(*x)) Q.enqueue(x->lc);
+        if (HasRChild(*x)) Q.enqueue(x->rc);
+    }
+}
