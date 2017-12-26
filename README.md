@@ -7,8 +7,12 @@
 #### *01/01/2018 10:45:52 PM* ####
 ->6.828 lecture lab...*(可能搁置)*  
 
-#### 12/22/2017 6:47:54 PM ####
-network program  
+#### 12/26/2017 8:47:27 PM ####
+更换用户名为 shingAling  
+
+#### 12/25/2017 2:13:38 PM ####
+csapp看了这么久，感觉自己该输出一些东西了。  
+server暂定名"Sven"，因其能迸发出神之力量。  
 
 #### 12/17/2017 12:13:43 AM ####
 看[blog](http://lifeofzjs.com/blog/2015/05/16/how-to-write-a-server/ "how-to-write-a-server")时记录的一段关于做工程的一些良好习惯  
