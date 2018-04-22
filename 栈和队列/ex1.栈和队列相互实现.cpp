@@ -14,7 +14,8 @@ public:
 		if(stk.empty())
 			return false;
 		
-		int temp = skt.top();
+		int temp = stk.top();
+		stk.pop();
 		if(!dequeue(x))
 			x = temp;
 		else
@@ -46,4 +47,4 @@ public:
 		que.pop();
 		return x;
 	}
-};
+}; 
